@@ -42,7 +42,6 @@ int strtobig_int(const char *str, int len, struct BigInt *big_int);
 *** @param *big_int The BigInt to be printed.
 */
 void print_big_int(const struct BigInt *big_int);
-
 /** multiply() multiplies a BigInt by an int.
 *** @param big_int The BigInt to be multiplied.
 *** @param factor The int value which is multiplied by BigInt.
@@ -76,5 +75,11 @@ void copy_big_int(const struct BigInt *from, struct BigInt *to);
 */
 int main(int argc, char *argv[])
 {
+	char input[MAX_DIGITS];
+	printf("Pyramid of Numbers\n");
+	printf("\n");
+	printf("Please enter a number: ");
+	scanf("%s\n", input);
+
 	return 0;
 }
