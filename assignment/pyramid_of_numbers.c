@@ -13,6 +13,7 @@
  * ----------------------------------------------------------
  */
 #include <stdio.h>
+#include <string.h>
 
 /// The maximum number of digits allowed in a big int.
 #define MAX_DIGITS 80
@@ -36,7 +37,7 @@ struct BigInt {
 *** @param *big_int The converted string now as BigInt.
 * @return The number of characters converted.
 */
-int strtobig_int(const char *str, int len, struct BigInt *big_int);
+int str_tobigint(const char *str, int len, struct BigInt *big_int);
 
 /** print_big_int() prints a BigInt.
 *** @param *big_int The BigInt to be printed.
@@ -77,9 +78,11 @@ int main(int argc, char *argv[])
 {
 	char input[MAX_DIGITS];
 	printf("Pyramid of Numbers\n");
+	printf("==================\n");
 	printf("\n");
 	printf("Please enter a number: ");
-	scanf("%s\n", input);
+	scanf("%s", input);
 
+	str_tobigint(char* str, int len, struct BigInt *big_int);
 	return 0;
 }
