@@ -1,9 +1,9 @@
 /*----------------------------------------------------------
- *				HTBLA-Leonding / Class: <your class>
+ *				HTBLA-Leonding / Class: 2DHIF
  * ---------------------------------------------------------
  * Exercise Number: 0
  * Title:			Pyramid of Numbers
- * Author:			<your name>
+ * Author:			Pirngruber Christian
  * ----------------------------------------------------------
  * Description:
  * Calculates a pyramid of numbers, i.e., it multiplies a big
