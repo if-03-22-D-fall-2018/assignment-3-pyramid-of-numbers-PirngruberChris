@@ -14,6 +14,7 @@
  */
 #include <stdio.h>
 #include <string.h>
+//#include <stbool.h>
 
 /// The maximum number of digits allowed in a big int.
 #define MAX_DIGITS 80
@@ -27,6 +28,7 @@ struct BigInt {
 
 	/** array of digits of big int. */
 	unsigned int the_int[MAX_DIGITS];
+
 };
 
 /** strtobig_int converts a string into a BigInt. If strtobig_int runs
@@ -37,7 +39,23 @@ struct BigInt {
 *** @param *big_int The converted string now as BigInt.
 * @return The number of characters converted.
 */
-int str_tobigint(const char *str, int len, struct BigInt *big_int);
+int str_tobigint(const char *str, int len, struct BigInt *big_int){
+	int count = len;
+	int converted = 0;
+
+	for (int i = 0; i > count; i++) {
+		if (str[len] < '0' || str[len] > 9) {
+			return 0;
+		}
+		big_int->the_int[i] = str[len] - '0';
+		converted ++;
+		len --;
+	}
+	if (converted > 0) {
+		return converted;
+	}
+	return 0;
+}
 
 /** print_big_int() prints a BigInt.
 *** @param *big_int The BigInt to be printed.
@@ -76,13 +94,17 @@ void copy_big_int(const struct BigInt *from, struct BigInt *to);
 */
 int main(int argc, char *argv[])
 {
+	struct BigInt bigInt;
 	char input[MAX_DIGITS];
+	int len;
 	printf("Pyramid of Numbers\n");
 	printf("==================\n");
 	printf("\n");
 	printf("Please enter a number: ");
 	scanf("%s", input);
 
-	str_tobigint(char* str, int len, struct BigInt *big_int);
+	len = strlen(input);
+
+	str_tobigint(input, len, &bigInt);
 	return 0;
 }
