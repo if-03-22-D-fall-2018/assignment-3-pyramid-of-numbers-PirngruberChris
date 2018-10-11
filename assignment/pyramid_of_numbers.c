@@ -66,7 +66,19 @@ void print_big_int(const struct BigInt *big_int);
 *** @param factor The int value which is multiplied by BigInt.
 *** @param *big_result The result of the multiplication.
 */
-void multiply(const struct BigInt *big_int, int factor, struct BigInt *big_result);
+void multiply(const struct BigInt *big_int, int factor, struct BigInt *big_result){
+	int nextDigit = 0;
+	int carry = 0;
+	for (int i = 0; i < count; i++) {
+		for (int i = 0; i < 7; i++) {
+				big_result->the_int[i] = big_int->the_int[i] * factor;
+				nextDigit = big_result->the_int[i] % 10;
+				big_result->the_int[i] = nextDigit + carry;
+				carry = big_result->the_int[i] / 10;
+		}
+	}
+}
+
 
 /** divide() multiplies a BigInt by an int.
 *** @param big_int The BigInt to be divided.
@@ -94,9 +106,11 @@ void copy_big_int(const struct BigInt *from, struct BigInt *to);
 */
 int main(int argc, char *argv[])
 {
+	struct BigInt bigResult;
 	struct BigInt bigInt;
 	char input[MAX_DIGITS];
 	int len;
+	int factor = 2;
 	printf("Pyramid of Numbers\n");
 	printf("==================\n");
 	printf("\n");
@@ -106,5 +120,6 @@ int main(int argc, char *argv[])
 	len = strlen(input);
 
 	str_tobigint(input, len, &bigInt);
+	multiply(&bigInt, factor, &bigResult);
 	return 0;
 }
