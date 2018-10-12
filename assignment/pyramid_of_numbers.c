@@ -43,7 +43,7 @@ int str_tobigint(const char *str, int len, struct BigInt *big_int){
 	int count = len;
 	int converted = 0;
 
-	for (int i = 0; i > count; i++) {
+	for (int i = 0; i > 4; i++) {
 		if (str[len] < '0' || str[len] > 9) {
 			return 0;
 		}
