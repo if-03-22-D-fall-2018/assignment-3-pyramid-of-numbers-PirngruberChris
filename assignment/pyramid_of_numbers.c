@@ -40,22 +40,20 @@ struct BigInt {
 * @return The number of characters converted.
 */
 int str_tobigint(const char *str, int len, struct BigInt *big_int){
-	int count = len;
-	int converted = 0;
-
-	for (int i = 0; i > count; i++) {
-		if (str[len] < '0' || str[len] > 9) {
-			return 0;
+	int converted =0;
+		int count = len;
+		len -= 1;
+		for (size_t i = 0; i < count; i++) {
+			if (str[len] < '0' || str[len] > '9')
+			{
+				return 0;
+			}
+			big_int->the_int[i] = str[len] - '0';
+			converted++;
+			len--;
 		}
-		big_int->the_int[i] = str[len] - '0';
-		converted ++;
-		len --;
-		big_int->digits_count ++;
-	}
-	if (converted > 0) {
+		big_int->digits_count = converted;
 		return converted;
-	}
-	return 0;
 }
 
 /** print_big_int() prints a BigInt.
@@ -77,16 +75,30 @@ void print_big_int(const struct BigInt *big_int){
 *** @param *big_result The result of the multiplication.
 */
 void multiply(const struct BigInt *big_int, int factor, struct BigInt *big_result){
-	int nextDigit = 0;
 	int carry = 0;
-	int count = 0;
-		for (int i = 0; i < MAX_DIGITS; i++) {
-				big_result->the_int[i] = big_int->the_int[i] * factor;
-				nextDigit = big_result->the_int[i] % 10;
-				big_result->the_int[i] = nextDigit + carry;
-				carry = big_result->the_int[i] / 10;
-				count ++;
+	int temp;
+	int count = big_int->digits_count;
+	big_result->digits_count = big_int->digits_count;
+
+	for (int i = 0; i < count; i++) {
+	temp=big_int->the_int[i] * factor + carry;
+	carry = 0;
+	if (temp > 9) {
+		if (i == big_int->digits_count-1)
+		{
+			big_result->digits_count++;
+			big_result->the_int[i]=temp%10;
+			big_result->the_int[i+1]=temp/10;
+		} else {
+			carry=temp/10;
+			big_result->the_int[i]=temp%10;
 		}
+	}
+	else
+	{
+		big_result->the_int[i]=temp;
+	}
+}
 }
 
 
@@ -96,13 +108,12 @@ void multiply(const struct BigInt *big_int, int factor, struct BigInt *big_resul
 *** @param *big_result The result of the division.
 */
 void divide(const struct BigInt *big_int, int divisor, struct BigInt *big_result){
-	int carry;
+	int carry = 0;
 	int temp;
-
-	for (size_t i = 0; i < big_int->digits_count; i++) {
+		for (int i = 0; i < big_int->digits_count; i++) {
 			big_result->the_int[i] = 0;
 			big_result->digits_count = i+1;
-			temp = carry*10 + big_int->the_int[i];
+			temp = carry * 10 + big_int->the_int[i];
 			if (temp >= divisor) {
 				big_result->the_int[i] = temp / divisor;
 				carry = temp % divisor;
@@ -111,7 +122,8 @@ void divide(const struct BigInt *big_int, int divisor, struct BigInt *big_result
 			{
 				carry = big_int->the_int[i];
 			}
-	}
+
+		}
 }
 
 /** copy_big_int() copies a BigInt to another BigInt.
@@ -126,12 +138,10 @@ void copy_big_int(const struct BigInt *from, struct BigInt *to){
 void reverse_Bigint(struct BigInt *big_int){
 	int i = big_int->digits_count-1;
   int j = 0;
-	int temp;
-	int secondtemp;
    while(i > j)
    {
-     temp = big_int->the_int[i];
-		 secondtemp = big_int->the_int[j];
+     int temp = big_int->the_int[i];
+		 int secondtemp = big_int->the_int[j];
      big_int->the_int[i] = secondtemp;
      big_int->the_int[j] = temp;
      i--;
