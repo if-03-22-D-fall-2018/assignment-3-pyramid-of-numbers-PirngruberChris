@@ -43,13 +43,14 @@ int str_tobigint(const char *str, int len, struct BigInt *big_int){
 	int count = len;
 	int converted = 0;
 
-	for (int i = 0; i > 4; i++) {
+	for (int i = 0; i > count; i++) {
 		if (str[len] < '0' || str[len] > 9) {
 			return 0;
 		}
 		big_int->the_int[i] = str[len] - '0';
 		converted ++;
 		len --;
+		big_int->digits_count ++;
 	}
 	if (converted > 0) {
 		return converted;
@@ -69,13 +70,16 @@ void print_big_int(const struct BigInt *big_int);
 void multiply(const struct BigInt *big_int, int factor, struct BigInt *big_result){
 	int nextDigit = 0;
 	int carry = 0;
-	for (int i = 0; i < count; i++) {
-		for (int i = 0; i < 7; i++) {
+	int count = 0;
+	for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < MAX_DIGITS; i++) {
 				big_result->the_int[i] = big_int->the_int[i] * factor;
 				nextDigit = big_result->the_int[i] % 10;
 				big_result->the_int[i] = nextDigit + carry;
 				carry = big_result->the_int[i] / 10;
+				count ++;
 		}
+		factor ++;
 	}
 }
 
